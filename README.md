@@ -1,2 +1,2 @@
-# sandbox
- first repo
+# GEOINFORMATYKA RZĄDZI
+## OH YEEEAAAHHHHH!
