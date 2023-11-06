@@ -3,5 +3,6 @@ users_list: list = [
     {"nick":"kwadrat", "name":"Szymek", "posts":9},
     {"nick":"geodeta naczelny", "name":"Oliver", "posts":123},
     {"nick":"Król", "name":"Stanisław","posts":79},
-    {"nick":"kozak", "name":"Szymon","posts":199}
+    {"nick":"kozak", "name":"Szymon","posts":199},
+    {"nick":"aaa", "name":"Agata","posts":279},
 ]
