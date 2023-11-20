@@ -4,7 +4,7 @@ def add_user_to(users_list:list)-> None:
     :param users_list: list - user list
     :return: None
     """
-    name = input('podaj imię ?')
+    name = input('podaj imię?')
     posts = input('podaj liczbe postow ?')
     users_list.append({'name':name, 'posts': posts})
 
@@ -40,7 +40,15 @@ def remove_user_from(users_list: list) -> None:
 # remove_user_from(users_list)
 #add_user_to(users_list)
 #users_list.remove({"nick":"aaa", "name":"Agata","posts":279})
-
+def update_user(users_list: list[dict,dict]) -> None:
+    nick_of_user = input('podaj nick uzytkownika do modyfikacji ')
+    print(nick_of_user)
+    for user in users_list:
+        if user['nick'] == nick_of_user:
+            print('Znaleziono !!!')
+            user['name'] = input('Podaj nowe imie:  ')
+            user['nick'] = input('Podaj nowy nick:  ')
+            user['posts'] = int(input('Podaj liczbe postow: '))
 def show_users_from(users_list: list)-> None:
     for user in users_list:
         print(f'Twój znajomy {user["name"]} dodał {user["posts"]}')
@@ -56,7 +64,7 @@ def gui(users_list: list) -> None:
               f'4: Modyfikuj użytkowników'
               )
 
-        menu_option = input('Podaj funkcję do wywołania')
+        menu_option = input('Podaj funkcję do wywołania ')
         print(f'Wybrano funkcję {menu_option}')
 
         match menu_option:
@@ -73,7 +81,7 @@ def gui(users_list: list) -> None:
                 remove_user_from(users_list)
             case '4':
                 print('modyfikuję użytkownika')
-                print('to będzie zrobione') #TODO add this function to my_functions
+                update_user(users_list)
 
 
 
