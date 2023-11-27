@@ -150,6 +150,13 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+<<<<<<< HEAD
 mapka_Agata.html
 mapka_Piotrek.html
 mapka.html
+=======
+notatnik.py
+mapka.html
+mapka_Piotrek.html
+mapka_Agata.html
+>>>>>>> 8aacbc86c666b58a3c14024017c497d89faf1a7b
