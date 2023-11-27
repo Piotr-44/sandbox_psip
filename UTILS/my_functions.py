@@ -1,3 +1,12 @@
+from bs4 import BeautifulSoup
+import requests
+import folium
+from dane import users_list
+
+
+#####################################
+
+
 def add_user_to(users_list:list)-> None:
     """
     add object to list
@@ -6,10 +15,14 @@ def add_user_to(users_list:list)-> None:
     """
     name = input('podaj imię?')
     posts = input('podaj liczbe postow ?')
-    users_list.append({'name':name, 'posts': posts})
+    city = input('podaj miasto')
+    users_list.append({'name':name, 'posts': posts, 'city': city})
+
 
 
 #######################################################
+
+
 def remove_user_from(users_list: list) -> None:
     """
     remove object from list
@@ -33,13 +46,12 @@ def remove_user_from(users_list: list) -> None:
     else:
         users_list.remove(tmp_list[numer-1])
 
-#################################################
-# remove_user_from(users_list)
 
-# add_user_to(users_list)
-# remove_user_from(users_list)
-#add_user_to(users_list)
-#users_list.remove({"nick":"aaa", "name":"Agata","posts":279})
+
+#################################################
+
+
+
 def update_user(users_list: list[dict,dict]) -> None:
     nick_of_user = input('podaj nick uzytkownika do modyfikacji ')
     print(nick_of_user)
@@ -49,11 +61,71 @@ def update_user(users_list: list[dict,dict]) -> None:
             user['name'] = input('Podaj nowe imie:  ')
             user['nick'] = input('Podaj nowy nick:  ')
             user['posts'] = int(input('Podaj liczbe postow: '))
+            user['city'] = input('podaj miasto')
+
+
+#####################################
+
+
 def show_users_from(users_list: list)-> None:
     for user in users_list:
         print(f'Twój znajomy {user["name"]} dodał {user["posts"]}')
 
+
+
 #############################################
+
+
+def get_coordinates_of(city: str) -> list[float, float]:
+    # pobranie współrzędnych z treści strony internetowej
+
+    adres_URL = f'https://pl.wikipedia.org/wiki/{city}'
+
+    response = requests.get(url=adres_URL)
+    response_html = BeautifulSoup(response.text, 'html.parser')
+
+    response_html_latitude = response_html.select('.latitude')[1].text
+    response_html_latitude = float(response_html_latitude.replace(',', '.'))
+    response_html_longitude = response_html.select('.longitude')[1].text
+    response_html_longitude = float(response_html_longitude.replace(',', '.'))
+
+    return [response_html_latitude, response_html_longitude]
+
+
+#####################################
+
+
+def get_map_one_user(user:str)->None:
+    city = get_coordinates_of(user["city"])
+    map = folium.Map(
+        location=city,
+        tiles="OpenStreetMap",
+        zoom_start=14
+    )
+    folium.Marker(
+        location=city,
+        popup=f'Tu rządzi {user["name"]},'
+              f'Liczba postów: {user["posts"]} '
+    ).add_to(map)
+    map.save(f'mapka_{user["name"]}.html')
+
+
+#####################################
+
+
+def get_map_of(users: list[dict,dict])-> None:
+    map = folium.Map(location=[52.3,21.0], tiles="OpenStreetMap", zoom_start=7)
+
+    for user in users:
+        folium.Marker(
+        location=get_coordinates_of(city=user['city']),
+        popup=f'Użytkownik: {user["name"]} \n'
+              f'Liczba postów {user["posts"]}'
+        ).add_to(map)
+    map.save('mapka.html')
+
+
+
 def gui(users_list: list) -> None:
     while True:
         print(f' MENU: \n'
@@ -61,7 +133,9 @@ def gui(users_list: list) -> None:
               f'1: Wyświetl użytkowników \n'
               f'2: Dodaj użytkownika \n'
               f'3: Usuń użytkownika \n'
-              f'4: Modyfikuj użytkowników'
+              f'4: Modyfikuj użytkowników \n'
+              f'5: Wygeneruj mapę z użytkownikiem \n'
+              f'6: Wygeneruj mapę z użytkownikami'
               )
 
         menu_option = input('Podaj funkcję do wywołania ')
@@ -82,6 +156,15 @@ def gui(users_list: list) -> None:
             case '4':
                 print('modyfikuję użytkownika')
                 update_user(users_list)
+            case '5':
+                print('Rysuj mape z uzytkownikiem')
+                user = input("podaj nazwe uzytkownika")
+                for item in users_list:
+                    if item['name'] == user:
+                        get_map_one_user(item)
+            case '6':
+                print('Rysuję mapę z wszystkimi użytkownikami')
+                get_map_of(users_list)
 
 
 
