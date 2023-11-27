@@ -2,10 +2,11 @@ import re
 
 from bs4 import BeautifulSoup
 import requests
+import folium
 
 #pobranie website'a
 
-nazwa_miejscowości = 'Gdańsk'
+nazwa_miejscowości = 'Biała_Podlaska'
 
 def get_coordinates_of(city:str)->list[float, float]:
     # pobranie współrzędnych z treści strony internetowej
@@ -26,4 +27,23 @@ def get_coordinates_of(city:str)->list[float, float]:
 
     return [response_html_latitude, response_html_longitude]
 
-print(get_coordinates_of(nazwa_miejscowości))
+#print(get_coordinates_of(nazwa_miejscowości))
+
+
+
+
+#Zwrócić mapę z pinezką odnoszącą się do użytkownika podanego z klawiatury
+#Zwrócić mapę z wszystkimi ...
+#RYSOWANIE MAPY
+city = get_coordinates_of(city='Biała_Podlaska')
+
+map = folium.Map(location=[52.3,21.0], tiles="OpenStreetMap", zoom_start=7)
+
+for item in nazwa_miejscowości:
+    folium.Marker(
+        location=city,
+        popup='GEOINFORMATYKA RZĄDZIII!!!'
+
+    ).add_to(map)
+
+map.save('mapka.html')
