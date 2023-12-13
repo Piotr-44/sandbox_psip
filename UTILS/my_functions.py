@@ -171,4 +171,4 @@ def gui(users_list: list) -> None:
 #gui(users_list)
 def pogoda_z(miasto: str):
     url = f"https://danepubliczne.imgw.pl/api/data/synop/station/{miasto}"
-    return  requests.get(url).json()
+    return requests.get(url).json()

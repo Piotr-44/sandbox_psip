@@ -1,20 +1,42 @@
+import sqlalchemy
+db_params = sqlalchemy.URL.create(
+    drivername="postgresql+psycopg2",
+    username="postgres",
+    password="Psip2023",
+    host="localhost",
+    database="postgres",
+    port=5433
+)
+engine=sqlalchemy.create_engine(db_params) 
+connection=engine.connect()                     #error
+#sql_query_1=sqlalchemy.text("INSERT INTO public.my_table (name) Values ('skrzynski'), ('kepa'), ('oleksy');")
+#sql_query_1=sqlalchemy.text("select * from public.my_table;")
+#sql_query_1=sqlalchemy.text("DELETE FROM public.my_table WHERE id = 1;")
+#sql_query_1=sqlalchemy.text("UPDATE public.my_table SET name='kepa' WHERE name='malinowski';")
 
-import requests
-class User:
-    def __init__(self, miasto):
-        self.miasto = miasto
+def dodaj_uzytkownika(user:str):
+    sql_query_1 = sqlalchemy.text(f"INSERT INTO public.my_table(name) VALUES ('{user}');")
+    connection.execute(sql_query_1)
+    connection.commit()
+# dodaj_uzytkownika(
+#     user=input()
+# )
 
-    def pogoda_z(self, miasto: str):
-        url = f"https://danepubliczne.imgw.pl/api/data/synop/station/{miasto}"
-        return requests.get(url).json()
+def usun_uzytkownika(user:str):
+    sql_query_1 = sqlalchemy.text(f"DELETE FROM public.my_table WHERE name = '{user}';")
+    connection.execute(sql_query_1)
+    connection.commit()
+# usun_uzytkownika(
+#     user=input()
+# )
+
+def aktualizuj_uzytkownika(user_1:str,user_2:str):
+    sql_query_1 = sqlalchemy.text(f"UPDATE public.my_table SET name= '{user_1}' WHERE name = '{user_2}';")
+    connection.execute(sql_query_1)
+    connection.commit()
+# aktualizuj_uzytkownika(
+#     user_1=input('na kogo'),
+#     user_2=input('kogo')
+# )
 
 
-npc_1 = User(miasto="warszawa")
-npc_2 = User(miasto="zamosc")
-print(npc_1.miasto)
-print(npc_2.miasto)
-
-print(npc_1.pogoda_z(npc_1.miasto))
-print(npc_2.pogoda_z(npc_2.miasto))
-
-pogoda_z("warszawa")
