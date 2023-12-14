@@ -37,23 +37,23 @@ Base.metadata.create_all(engine)
 
 
 
-# Session = sqlalchemy.orm.sessionmaker(bind=engine)
-# session = Session()
-#
-#
-# ### Create / Insert
-# lista_userow: list = []
-# fake = Faker()
-#
-#
-# for item in range(10_000):
-#     lista_userow.append(
-#         User(
-#             name=fake.name(),
-#             location=f'POINT({random.uniform(14,24)} {random.uniform(49,55)})'
-#         ))
-# session.add_all(lista_userow)
-# session.commit()
+Session = sqlalchemy.orm.sessionmaker(bind=engine)
+session = Session()
+
+
+### Create / Insert
+lista_userow: list = []
+fake = Faker()
+
+
+for item in range(10_000):
+    lista_userow.append(
+        User(
+            name=fake.name(),
+            location=f'POINT({random.uniform(14,24)} {random.uniform(49,55)})'
+        ))
+session.add_all(lista_userow)
+session.commit()
 
 ### Read / Select
 
@@ -70,6 +70,7 @@ Base.metadata.create_all(engine)
 # print((user_from_db))
 
 
-# session.flush()
-# connection.close()
-# engine.dispose()
+session.flush()
+connection.close()
+engine.dispose()
+
