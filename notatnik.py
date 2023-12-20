@@ -129,7 +129,7 @@ def get_map_one_user():
             popup=f'Tu rządzi {user[3]}\n'f'Liczba postów: {user[4]} ').add_to(map)
     map.save(f'mapka_{user[1]}_{user[2]}.html')
 
-get_map_one_user()
+# get_map_one_user()
 
 
 def get_map_of():

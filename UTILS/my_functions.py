@@ -94,7 +94,7 @@ def show_users_from():
     cursor.execute(sql_query_1)
     query_result = cursor.fetchall()
     for row in query_result:
-        print(f'Twój znajomy {row[3]} opublikował {row[4]} postów')
+        print(f'Twój znajomy {row[3]} mieszka w mieście {row[1]} i opublikował {row[4]} postów')
 
 
 
@@ -181,18 +181,18 @@ def gui() -> None:
 
         match menu_option:
             case '0':
-                print('kończę pracę')
+                print('Kończę pracę')
                 break
             case '1':
                 show_users_from()
             case '2':
-                print('dodaję użytkownika')
+                print('Dodaję użytkownika')
                 add_user()
             case '3':
-                print('usuwam użytkownika')
+                print('Usuwam użytkownika')
                 remove_user()
             case '4':
-                print('modyfikuję użytkownika')
+                print('Modyfikuję użytkownika')
                 update_user()
             case '5':
                 print('Rysuj mape z uzytkownikiem')
