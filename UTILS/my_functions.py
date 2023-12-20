@@ -53,7 +53,7 @@ def remove_user():
 
     for numer_uzytkownika, user_to_be_removed in enumerate(query_result):
         print(f'{numer_uzytkownika + 1}: {user_to_be_removed}')
-    numer = int(input(f'Wybierz użytkownika do usunięcia: '))  # wynikiem operacji inpunt jest string więc musimy zMIENIĆ go dalej na ineger
+    numer = int(input(f'Wybierz użytkownika do usunięcia: '))
     print(numer)
     if numer == 0:
         sql_query_2 = f"DELETE * FROM public.tabela_psip: "
@@ -128,7 +128,7 @@ def get_map_one_user():
     sql_query_1 = f" SELECT * FROM public.tabela_psip WHERE city ='{city_name}';"
     cursor.execute(sql_query_1)
     query_result = cursor.fetchall()
-    print("Zakończ program, aby wyświetlić wynik")
+    print("W przypadku braku wygenerowanej mapy - zakończ program, aby wyświetlić wynik")
     map = folium.Map(
         location=get_coordinates_of(city_name),
         tiles="OpenStreetMap",
@@ -156,7 +156,7 @@ def get_map_of():
             location=get_coordinates_of(city=user[1]),
             popup=f'Użytkownik: {user[3]} \n'f'Liczba postów {user[4]}').add_to(map)
     map.save(f'mapka.html')
-    print("Zakończ program, aby wyświetlić wynik")
+    print("W przypadku braku wygenerowanej mapy - zakończ program, aby wyświetlić wynik")
 
 
 
@@ -202,7 +202,7 @@ def gui() -> None:
                 get_map_of()
 
 
-# gui()
+
 
 #####################################
 #####################################
